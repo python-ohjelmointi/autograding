@@ -1,0 +1,11 @@
+# student code should not be included in repository
+students
+
+# the results should not be included in repository
+reports
+
+# summary should not be included in repository
+summary.txt
+summary.csv
+
+__pycache__
