@@ -2,23 +2,28 @@
 
 This repository contains the autograding scripts for Python exercises returned
 in MS Teams. Students should submit their Python code as .py files, and the
-teacher can run the autograding script to check the code.
+teacher can run the autograding script to check the submissions from all students
+at once, using pytest.
 
 ## How to use
 
-Student submissions should be placed in the `submissions` folder. The teacher
-can download submissions from Sharepoint and place them in the `submissions`.
+Student submissions should be placed in the `submissions` folder. The easiest
+way to achieve this is by downloading all student submissions in one zip
+ package from Sharepoint and place them in the `submissions` folder in this project.
 
 The teacher can then run the `autograding.sh` script to check the submissions.
-Check the contents of the autograding before executing, as it will make changes
-in the submission folders to remove unneeded files and rename incorrect files.
+Check the contents of the autograding script before executing, as it will make
+changes in the submission folders to remove unneeded files and rename incorrect
+files. Never use the autograding scripts on the "main" files in Sharepoint, but
+be sure to make local copies.
 
-The autograding script will create a `results` folder with the results of the
-pytest tests written in the `tests` folder. See examples in the `tests` folder.
+The autograding script will run pytest tests found in the `tests` folder for each
+student. The results from the test for each student will be saved both as .txt
+and .json files in the `results` folder. See example tests in the `tests` folder.
 
 Finally, `autograding.sh` will execute the `test_summary.py` script to create a
-summary of the test results in the `results` folder, and save the summary in the
-`summary.txt` file.
+summary of the test results from previous steps. The summary is saved in the
+`summary.txt` file and printed to the console.
 
 The `summary.txt` file will contain the test results, as well as the total points
 and the grade, for each student. The summary for an individual student is similar to
