@@ -1,5 +1,8 @@
 import json
+import csv
+import io
 from pathlib import Path
+
 
 def get_grade(scores, max_score):
     '''
@@ -29,11 +32,21 @@ def get_grade(scores, max_score):
     diff = max_score * 0.6
     return 1 + 4 * (scores - min_score) / diff
 
+
 def list_json_files(folder: str) -> list[Path]:
     path = Path(__file__).parent / folder
     return path.glob("*.json")
 
+
 if __name__ == "__main__":
+
+    # Create an in-memory buffer
+    csv_buffer = io.StringIO()
+
+    # Create a CSV writer object, writing to the buffer
+    csv_writer = csv.writer(csv_buffer)
+    csv_writer.writerow(["Name", "Points", "Grade"])
+
     reports_folder = "reports"
 
     # After running autograding.sh, the test results are stored in JSON files
@@ -65,7 +78,8 @@ if __name__ == "__main__":
 
             # Test function name is the first keywrod. Remove the 'test_'
             # prefix and underscores to make them more human readable.
-            case_name = test["keywords"][0].replace('test_', '').replace('_', ' ')
+            case_name = test["keywords"][0].replace(
+                'test_', '').replace('_', ' ')
 
             outcome = test["outcome"]
 
@@ -88,4 +102,11 @@ if __name__ == "__main__":
         print(f"Points: {passed} / {total_tests}")
         print(f"Grade:  {grade:.2f}")
 
+        # Write the student's name and grade to the CSV file
+        csv_writer.writerow([student_name, passed, round(grade, 2)])
+
         print('\n\n', '*' * 80, '\n\n', sep='')
+
+    csv_content = csv_buffer.getvalue()
+    csv_path = Path(__file__).parent / 'summary.csv'
+    csv_path.write_text(csv_content, encoding='utf-8-sig')

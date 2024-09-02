@@ -10,7 +10,7 @@ find students -depth -type d -empty -exec rmdir {} \;
 find students -type f -name '* [0-9]*.py' -exec sh -c 'mv "$1" "$(echo "$1" | sed "s/ [0-9]*\.py/.py/")"' _ {} \;
 
 # install pytest and run tests for all student folders
-pip install pytest pytest-json-report
+pip install pytest pytest-json-report pytest-timeout
 
 # create the folder to save individual reports in
 mkdir reports
@@ -21,7 +21,7 @@ find students -type f -name '*.py' -exec dirname {} \; | sort | uniq | while rea
     student_name=$(echo "$dir" | cut -d'/' -f2)
 
     echo "Testing $dir"
-    PYTHONPATH="$dir" pytest -v  --continue-on-collection-errors --json-report --json-report-file=reports/"$student_name".json tests/ > reports/"$student_name".txt
+    PYTHONPATH="$dir" pytest -v  --continue-on-collection-errors --json-report --json-report-file=reports/"$student_name".json --timeout=5 tests/ > reports/"$student_name".txt
 done
 
 # Create a summary of the tests, save it, and print it out
