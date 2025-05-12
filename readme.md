@@ -1,15 +1,29 @@
 # Autograding for Python exercises returned in MS Teams
 
 This repository contains the autograding scripts for Python exercises returned
-in MS Teams. Students should submit their Python code as .py files, and the
+in MS Teams. Students should submit their Python code as *.py* files, and the
 teacher can run the autograding script to check the submissions from all students
-at once, using pytest.
+at once, using *pytest*.
 
 ## How to use
 
-Student submissions should be placed in the `submissions` folder. The easiest
-way to achieve this is by downloading all student submissions in one zip
- package from Sharepoint and place them in the `submissions` folder in this project.
+The repository contains scripts for both grading a single submission and a batch of submissions from a Sharepoint folder that stores Teams submissions.
+
+### Single submission
+
+The `tests.sh` script can be used to test a single submission. Tests should be placed in the [tests folder](./tests/) and the student submission in the [submission folder](./submission/). When testing a single submission, the Python files should be placed in the folder as plain Python files:
+
+```sh
+./tests.sh
+```
+
+
+### Multiple submissions
+
+When testing a batch of submissions, the submissions should be placed in the
+`submissions` folder and the folder structure should be the same as in the
+Sharepoint folder, where the submissions are stored in folders, which have the
+student's name as the folder name.
 
 The teacher can then run the `autograding.sh` script to check the submissions.
 Check the contents of the autograding script before executing, as it will make
